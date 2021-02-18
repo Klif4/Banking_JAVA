@@ -7,7 +7,7 @@ import lombok.NonNull;
 
 @AllArgsConstructor
 @EqualsAndHashCode
-public class DepositEvent implements AccountOperationEvent {
+public class WithdrawEvent implements AccountOperationEvent {
 
   @NonNull
   private final Amount amount;

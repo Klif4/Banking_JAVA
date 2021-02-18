@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
+
+    implementation project(':domain')
+    compile 'org.mongodb:mongodb-driver:3.12.1'
+    testImplementation group: 'de.bwaldvogel', name: 'mongo-java-server', version: '1.7.0'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}

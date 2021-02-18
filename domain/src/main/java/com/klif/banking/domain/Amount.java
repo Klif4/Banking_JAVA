@@ -1,9 +1,11 @@
 package com.klif.banking.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Amount {
   @NonNull
   private final int value;
