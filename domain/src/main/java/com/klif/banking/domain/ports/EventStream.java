@@ -7,6 +7,5 @@ public interface EventStream {
 
   List<AccountOperationEvent> all();
 
-
   void publish(AccountOperationEvent event);
 }
