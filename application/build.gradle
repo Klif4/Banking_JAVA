@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
+
+    implementation project(':domain')
+
+    implementation group: 'io.javalin', name: 'javalin', version: '3.13.4'
+}
+
+test {
+    useJUnitPlatform()
+}

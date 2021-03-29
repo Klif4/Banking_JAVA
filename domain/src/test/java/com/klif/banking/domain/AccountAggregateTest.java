@@ -10,9 +10,6 @@ import static org.mockito.BDDMockito.then;
 import com.klif.banking.domain.events.DepositEvent;
 import com.klif.banking.domain.events.WithdrawEvent;
 import com.klif.banking.domain.ports.EventStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -32,7 +29,8 @@ class AccountAggregateTest {
         .eventStream(eventStream)
         .build();
 
-    assertThat(aggregate.statement()).isEqualTo("Amount     Balance");
+    assertThat(aggregate.account().statement()).isEmpty();
+    assertThat(aggregate.account().balance()).isEqualTo(new Balance(0));
   }
 
   @Test
@@ -43,9 +41,8 @@ class AccountAggregateTest {
         .eventStream(eventStream)
         .build();
 
-    assertThat(aggregate.statement()).isEqualTo("Amount     Balance"
-                                                    + "\n+" + 25 + "     " + "25"
-    );
+    assertThat(aggregate.account().statement()).containsOnly(new StatementLine(25, 25));
+    assertThat(aggregate.account().balance()).isEqualTo(new Balance(25));
   }
 
   @Test
@@ -56,10 +53,10 @@ class AccountAggregateTest {
         .eventStream(eventStream)
         .build();
 
-    assertThat(aggregate.statement()).isEqualTo("Amount     Balance"
-                                                    + "\n+" + 25 + "     " + 25
-                                                    + "\n-" + 12 + "     " + 13
-    );
+    assertThat(aggregate.account().statement()).containsExactly(new StatementLine(25, 25),
+                                                                new StatementLine(-12, 13));
+    assertThat(aggregate.account().balance()).isEqualTo(new Balance(13));
+
   }
 
   @Test
@@ -79,7 +76,8 @@ class AccountAggregateTest {
 
     // Then
     then(eventStream).should().publish(new DepositEvent(amount));
-    assertThat(aggregate.statement()).isEqualTo("Amount     Balance" + "\n+" + 25 + "     " + 25);
+    assertThat(aggregate.account().statement()).containsOnly(new StatementLine(25, 25));
+    assertThat(aggregate.account().balance()).isEqualTo(new Balance(25));
   }
 
   @Test
@@ -98,6 +96,8 @@ class AccountAggregateTest {
 
     // Then
     then(eventStream).should().publish(new WithdrawEvent(amount));
-    assertThat(aggregate.statement()).isEqualTo("Amount     Balance" + "\n-" + 25 + "     " + -25);
+    assertThat(aggregate.account().statement()).containsOnly(new StatementLine(-25, -25));
+    assertThat(aggregate.account().balance()).isEqualTo(new Balance(-25));
+
   }
 }

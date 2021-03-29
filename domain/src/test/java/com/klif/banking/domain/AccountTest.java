@@ -9,14 +9,17 @@ class AccountTest {
   @Test
   void account_initialisation() {
     Account account = new Account();
-    assertThat(account.printStatement()).isEqualTo("Amount     Balance");
+    assertThat(account.statement()).isEmpty();
+    assertThat(account.balance()).isEqualTo(new Balance(0));
   }
 
   @Test
   void deposit_one_time_should_add_one_line() {
     Account account = new Account();
     account.deposit(new Amount(100));
-    assertThat(account.printStatement()).isEqualTo("Amount     Balance\n+100     100");
+    assertThat(account.statement())
+        .containsOnly(new StatementLine(100, 100));
+    assertThat(account.balance()).isEqualTo(new Balance(100));
   }
 
   @Test
@@ -24,7 +27,10 @@ class AccountTest {
     Account account = new Account();
     account.deposit(new Amount(100));
     account.deposit(new Amount(75));
-    assertThat(account.printStatement()).isEqualTo("Amount     Balance" + "\n+100     100" + "\n+75     175");
+    assertThat(account.statement())
+        .containsExactly(new StatementLine(100, 100), new StatementLine(75, 175));
+    assertThat(account.balance()).isEqualTo(new Balance(175));
+
   }
 
   @Test
@@ -33,11 +39,12 @@ class AccountTest {
     account.deposit(new Amount(100));
     account.deposit(new Amount(75));
     account.withDraw(new Amount(25));
-    assertThat(account.printStatement()).isEqualTo("Amount     Balance"
-                                                       + "\n+100     100"
-                                                       + "\n+75     175"
-                                                       + "\n-25     150"
-    );
+    assertThat(account.statement())
+        .containsExactly(new StatementLine(100, 100),
+                         new StatementLine(75, 175),
+                         new StatementLine(-25, 150));
+    assertThat(account.balance()).isEqualTo(new Balance(150));
+
   }
 
   @Test
@@ -47,11 +54,11 @@ class AccountTest {
     account.deposit(new Amount(75));
     account.withDraw(new Amount(25));
     account.withDraw(new Amount(300));
-    assertThat(account.printStatement()).isEqualTo("Amount     Balance"
-                                                       + "\n+100     100"
-                                                       + "\n+75     175"
-                                                       + "\n-25     150"
-                                                       + "\n-300     -150"
-    );
+    assertThat(account.statement())
+        .containsExactly(new StatementLine(100, 100),
+                         new StatementLine(75, 175),
+                         new StatementLine(-25, 150),
+                         new StatementLine(-300, -150));
+    assertThat(account.balance()).isEqualTo(new Balance(-150));
   }
 }

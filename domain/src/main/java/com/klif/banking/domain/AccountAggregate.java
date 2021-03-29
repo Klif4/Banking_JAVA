@@ -29,10 +29,6 @@ public class AccountAggregate {
 
   }
 
-  public String statement() {
-    return account.printStatement();
-  }
-
   public void depositOnAccount(Amount amount) {
     eventStream.publish(new DepositEvent(amount));
     account.deposit(amount);
@@ -41,5 +37,9 @@ public class AccountAggregate {
   public void withDrawFromAccount(Amount amount) {
     eventStream.publish(new WithdrawEvent(amount));
     account.withDraw(amount);
+  }
+
+  public Account account() {
+    return account;
   }
 }

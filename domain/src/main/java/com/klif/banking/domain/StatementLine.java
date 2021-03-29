@@ -9,10 +9,4 @@ import lombok.NonNull;
 public class StatementLine {
   private final int amount;
   private final int balance;
-
-  @Override
-  public String toString() {
-    String sign = amount > 0 ? "+" : "";
-    return "\n" + sign + amount + "     " + balance;
-  }
 }
