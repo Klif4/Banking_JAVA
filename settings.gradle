@@ -10,4 +10,5 @@
 rootProject.name = 'banking'
 include 'domain'
 include 'infra'
+include 'application'
 

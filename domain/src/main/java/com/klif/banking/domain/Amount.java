@@ -7,7 +7,6 @@ import lombok.NonNull;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Amount {
-  @NonNull
   private final int value;
 
   public int value() {
