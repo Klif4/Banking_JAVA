@@ -22,4 +22,5 @@ public class AccountResource {
     useCaseFactory.createWithdrawToAccount().withdraw(new Amount(amount));
     ctx.status(204);
   }
+
 }
