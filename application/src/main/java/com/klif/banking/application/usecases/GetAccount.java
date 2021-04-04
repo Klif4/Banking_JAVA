@@ -4,8 +4,10 @@ import com.klif.banking.domain.Account;
 import com.klif.banking.domain.AccountAggregate;
 import com.klif.banking.domain.ports.EventStream;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 public class GetAccount {
 
   private final EventStream eventStream;

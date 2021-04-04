@@ -15,6 +15,12 @@ dependencies {
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '4.3.3'
 
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.2'
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.2'
+
+
+
     testCompile "org.mockito:mockito-core:2.+"
     testCompile 'org.mockito:mockito-junit-jupiter:2.27.0'
 
@@ -23,8 +29,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
     implementation project(':domain')
+    implementation project(':infra')
 
     implementation group: 'io.javalin', name: 'javalin', version: '3.13.4'
+    compile "org.slf4j:slf4j-simple:1.8.0-beta4"
+
 }
 
 test {

@@ -10,6 +10,8 @@ import com.klif.banking.application.usecases.WithdrawToAccount;
 import com.klif.banking.domain.Amount;
 import io.javalin.Javalin;
 import io.restassured.RestAssured;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,9 +49,12 @@ class AccountResourceTest {
 
     given(useCaseFactory.createDepositToAccount()).willReturn(depositToAccount);
 
+    Map<String, Integer> body = new HashMap<>();
+    body.put("amount", 20);
+    
     RestAssured.given()
         .contentType("application/json")
-        .formParam("amount", 20)
+        .body(body)
         .post("http://localhost:1234/deposit")
         .then()
         .statusCode(204);
@@ -59,9 +64,11 @@ class AccountResourceTest {
 
   @Test
   void postDeposit_should_400() {
+    Map<String, Integer> body = new HashMap<>();
+    body.put("wrong_parameter", 20);
+
     RestAssured.given()
         .contentType("application/json")
-        .formParam("wrongParam", "20")
         .post("http://localhost:1234/deposit")
         .then()
         .statusCode(400);
@@ -73,9 +80,12 @@ class AccountResourceTest {
 
     given(useCaseFactory.createWithdrawToAccount()).willReturn(withdrawToAccount);
 
+    Map<String, Integer> body = new HashMap<>();
+    body.put("amount", 20);
+
     RestAssured.given()
         .contentType("application/json")
-        .formParam("amount", 20)
+        .body(body)
         .post("http://localhost:1234/withdraw")
         .then()
         .statusCode(204);
@@ -85,9 +95,12 @@ class AccountResourceTest {
 
   @Test
   void postWithdraw_should_400() {
+    Map<String, Integer> body = new HashMap<>();
+    body.put("wrong_parameter", 20);
+
     RestAssured.given()
         .contentType("application/json")
-        .formParam("wrongParam", "20")
+        .body(body)
         .post("http://localhost:1234/withdraw")
         .then()
         .statusCode(400);

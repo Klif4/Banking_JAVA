@@ -31,4 +31,9 @@ class UseCaseFactoryTest {
   void createWithdrawToAccount() {
     assertThat(tested.createWithdrawToAccount()).isEqualTo(new WithdrawToAccount(eventStream));
   }
+
+  @Test
+  void createGetAccount() {
+    assertThat(tested.createGetAccount()).isEqualTo(new GetAccount(eventStream));
+  }
 }

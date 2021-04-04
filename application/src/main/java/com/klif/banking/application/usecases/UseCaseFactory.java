@@ -15,4 +15,8 @@ public class UseCaseFactory {
     return new WithdrawToAccount(eventStream);
   }
 
+  public GetAccount createGetAccount() {
+    return new GetAccount(eventStream);
+  }
+
 }
